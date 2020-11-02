@@ -7,3 +7,10 @@ This is collection of programs that aim to help others stay healthy and active d
 
 ## Project Description & Information
 For more information on the implementation and goals of this project, visit https://docs.google.com/document/d/1SRWXCEONh7neZxH4ih1zhuTfDMggtEpBhissNMJsEVM/edit
+
+# Learning Resources
+## Haskell
+* http://learnyouahaskell.com/chapters
+* https://www.youtube.com/watch?v=02_H3LjqMr8&t=2141s
+## Prolog
+* http://www.learnprolognow.org/
