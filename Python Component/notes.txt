@@ -1,0 +1,13 @@
+Name: Calorie Tracker (Python)
+Author: David Cao
+Development Start Date: 11/12/20
+
+Planned Features:
+-Calculate net calorie gain/loss (from user input calorie intake and calorie burned)
+-Graph data and display for user to see (research graphing libraries)
+-Graph should display net calorie over time (per day?)
+-Data should be stored and saved
+
+
+General Notes:
+-Store calorie data in a txt file
