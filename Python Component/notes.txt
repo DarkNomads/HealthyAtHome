@@ -3,11 +3,14 @@ Author: David Cao
 Development Start Date: 11/12/20
 
 Planned Features:
--Calculate net calorie gain/loss (from user input calorie intake and calorie burned)
 -Graph data and display for user to see (research graphing libraries)
--Graph should display net calorie over time (per day?)
 -Data should be stored and saved
+-Do the same for other macros (protein, carbs, & fat)
 
+Current Features:
+-User can set a daily calorie target/goal
+-User can enter calories in/burned. App calculates net calories & compares it to user's target.
+-User can view their weekly progress
 
-General Notes:
--Store calorie data in a txt file
+TODO List:
+-Store calorie data in a txt file (File I/O)
