@@ -2,15 +2,12 @@ Name: Calorie Tracker (Python)
 Author: David Cao
 Development Start Date: 11/12/20
 
-Planned Features:
--Graph data and display for user to see (research graphing libraries)
--Data should be stored and saved
--Do the same for other macros (protein, carbs, & fat)
 
 Current Features:
--User can set a daily calorie target/goal
+-User can set a daily calorie & macro target/goal
 -User can enter calories in/burned. App calculates net calories & compares it to user's target.
+-User can enter macro information and compare it with target goal.
 -User can view their weekly progress
 
 TODO List:
--Store calorie data in a txt file (File I/O)
+-Implement graphing feature for all stats

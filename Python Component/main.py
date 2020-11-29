@@ -9,14 +9,15 @@ import matplotlib
 
 
 def display_menu():
-    print("\n*-----Calorie Tracker-----*")
-    print("1. Set calorie goal (daily)")
+    print("\n*-----Calorie & Macro Tracker-----*")
+    print("1. Set goals (daily)")
     print("2. Calculate today's net calorie")
-    print("3. Display this week's progress")
-    print("4. Quit program")
+    print("3. Enter today's macros")
+    print("4. Display this week's progress")
+    print("5. Quit program")
 
 
-def calc_net_cal(weekly_cal, curr_day, cal_goal):
+def calc_net_cal():
     # User enters intake/burn
     cal_in = int(input("Enter calorie intake: "))
     cal_burn = int(input("Enter calorie burned: "))
@@ -37,6 +38,42 @@ def calc_net_cal(weekly_cal, curr_day, cal_goal):
         print("Daily calories not met.")
 
 
+def macro_entry_comparison():
+    # User entries
+    carbs = int(input("Enter today's amount of carbs(grams): "))
+    fat = int(input("Enter today's amount of fat(grams): "))
+    protein = int(input("Enter today's amount of protein(grams): "))
+    print()
+
+    # Store macro information
+    weekly_carb[curr_day] = carbs
+    weekly_fat[curr_day] = fat
+    weekly_protein[curr_day] = protein
+
+    macro_names = ["carbs", "fat", "protein"]
+    macro_diff = []
+    macro_goals = [carb_goal, fat_goal, protein_goal]
+
+    # Goal comparison
+    carb_diff = macro_goals[0] - carbs
+    macro_diff.append(carb_diff)
+    fat_diff = macro_goals[1] - fat
+    macro_diff.append(fat_diff)
+    protein_diff = macro_goals[2] - protein
+    macro_diff.append(protein_diff)
+
+    k = 0
+    for macro in macro_diff:
+        print("Amount of", macro_names[k], "goal:", macro_goals[k], "grams")
+        if macro == 0:
+            print("Daily amount of", macro_names[k], "met.")
+        elif macro > 0:
+            print("Daily amount of", macro_names[k], "not met.")
+        else:
+            print("Daily amount of", macro_names[k], "exceeded goal.")
+        k += 1
+
+
 # TODO
 def graph():
     pass
@@ -48,27 +85,90 @@ def graph():
 
 # Get day of the week; 0 = Monday ... 6 = Sunday
 curr_day = datetime.date.today().weekday()
-
-# Weekly calories
-weekly_cal = [0, 0, 0, 0, 0, 0, 0]
 week = list(calendar.day_name)
 
-# User calorie goal (daily)
-cal_goal = 0
+# Open goals file (Cals, Carbs, Fat, and Protein are listed descending in the .txt file respectively.)
+goals_file = open("goals.txt", "r+")
+
+# User calorie and macro goals (daily)
+cal_goal = int(goals_file.readline())
+carb_goal = int(goals_file.readline())
+fat_goal = int(goals_file.readline())
+protein_goal = int(goals_file.readline())
+
+# Open daily files
+cal_file = open("daily_cal.txt", "r+")
+carb_file = open("daily_carbs.txt", "r+")
+fat_file = open("daily_fat.txt", "r+")
+protein_file = open("daily_protein.txt", "r+")
+# Load values into list
+cal_week_str = cal_file.readline()
+carb_week_str = carb_file.readline()
+fat_week_str = fat_file.readline()
+protein_week_str = protein_file.readline()
+# Current week's calories/macro list
+weekly_cal = cal_week_str.split(" ")
+weekly_carb = carb_week_str.split(" ")
+weekly_fat = fat_week_str.split(" ")
+weekly_protein = protein_week_str.split(" ")
+# Cast string to int
+for i in range(len(weekly_cal)):
+    weekly_cal[i] = int(weekly_cal[i])
+    weekly_carb[i] = int(weekly_carb[i])
+    weekly_fat[i] = int(weekly_fat[i])
+    weekly_protein[i] = int(weekly_protein[i])
+
 
 while True:
     display_menu()
     menu_choice = input("\nSelection: ")
 
     if menu_choice == "1":
+        # User enters goals
         cal_goal = int(input("Enter your daily calorie goal: "))
+        carb_goal = int(input("Enter your daily carb goal(grams): "))
+        fat_goal = int(input("Enter your daily fat goal(grams): "))
+        protein_goal = int(input("Enter your daily protein goal(grams): "))
+        # Save goal values to .txt
+        goals_file.seek(0)
+        goals_file.write(str(cal_goal) + "\n")
+        goals_file.write(str(carb_goal) + "\n")
+        goals_file.write(str(fat_goal) + "\n")
+        goals_file.write(str(protein_goal))
     elif menu_choice == "2":
-        calc_net_cal(weekly_cal, curr_day, cal_goal)
+        calc_net_cal()
     elif menu_choice == "3":
-        print("\n*-----Weekly Progress-----*")
-        for day in range(7):
-            print(week[day] + ": " + str(weekly_cal[day]))
+        macro_entry_comparison()
     elif menu_choice == "4":
+        print("\n*-----Weekly Progress-----*")
+        print("Calories, Carbs, Fat, Protein (respectively)")
+        for day in range(7):
+            print(week[day] + ": " + str(weekly_cal[day]), str(weekly_carb[day]), str(weekly_fat[day]),
+                  str(weekly_protein[day]))
+    elif menu_choice == "5":
+        print("Saving & quitting application...")
+        # Save & close files
+        cal_file.seek(0)
+        carb_file.seek(0)
+        fat_file.seek(0)
+        protein_file.seek(0)
+        for i in range(7):
+            if i == 6:
+                cal_file.write(str(weekly_cal[i]))
+                carb_file.write(str(weekly_carb[i]))
+                fat_file.write(str(weekly_fat[i]))
+                protein_file.write(str(weekly_protein[i]))
+            else:
+                cal_file.write(str(weekly_cal[i]) + " ")
+                carb_file.write(str(weekly_carb[i]) + " ")
+                fat_file.write(str(weekly_fat[i]) + " ")
+                protein_file.write(str(weekly_protein[i]) + " ")
+        # Close all files & exit
+        cal_file.close()
+        carb_file.close()
+        fat_file.close()
+        protein_file.close()
+        goals_file.close()
         exit(0)
     else:
         print("Invalid input...please try again")
