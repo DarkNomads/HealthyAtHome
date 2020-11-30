@@ -3,7 +3,7 @@
 # Libraries
 import datetime
 import calendar
-import matplotlib
+import matplotlib.pyplot as plt
 
 # Functions
 
@@ -74,11 +74,45 @@ def macro_entry_comparison():
         k += 1
 
 
-# TODO
 def graph():
-    pass
+    # Calories plot
+    plt.hlines(2250, 0, 6, colors='green', linestyles='dashed', label='Goal')
+    plt.bar(short_days, weekly_cal, width=0.5)
+    plt.ylabel("Calories")
+    plt.xlabel("Days")
+    plt.title("This Week's Calories")
+    plt.legend()
+    plt.show()
 
-# --------------------------------------------------------------
+    # Carbs plot
+    plt.hlines(160, 0, 6, colors='green', linestyles='dashed', label='Goal')
+    plt.bar(short_days, weekly_carb, width=0.5)
+    plt.ylabel("Carbs (g)")
+    plt.xlabel("Days")
+    plt.title("This Week's Amount of Carbs")
+    plt.legend()
+    plt.show()
+
+    # Fat plot
+    plt.hlines(87, 0, 6, colors='green', linestyles='dashed', label='Goal')
+    plt.bar(short_days, weekly_fat, width=0.5)
+    plt.ylabel("Fat (g)")
+    plt.xlabel("Days")
+    plt.title("This Week's Amount of Fat")
+    plt.legend()
+    plt.show()
+
+    # Protein plot
+    plt.hlines(44, 0, 6, colors='green', linestyles='dashed', label='Goal')
+    plt.bar(short_days, weekly_protein, width=0.5)
+    plt.ylabel("Protein (g)")
+    plt.xlabel("Days")
+    plt.title("This Week's Amount of Protein")
+    plt.legend()
+    plt.show()
+
+
+# -----------------------------------------------------------------
 
 # Main Program
 
@@ -86,6 +120,9 @@ def graph():
 # Get day of the week; 0 = Monday ... 6 = Sunday
 curr_day = datetime.date.today().weekday()
 week = list(calendar.day_name)
+
+# Abbreviated days of the week list (Used for plotting data)
+short_days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 
 # Open goals file (Cals, Carbs, Fat, and Protein are listed descending in the .txt file respectively.)
 goals_file = open("goals.txt", "r+")
@@ -123,8 +160,9 @@ while True:
     display_menu()
     menu_choice = input("\nSelection: ")
 
+    # User sets goals
     if menu_choice == "1":
-        # User enters goals
+        # Goal entries
         cal_goal = int(input("Enter your daily calorie goal: "))
         carb_goal = int(input("Enter your daily carb goal(grams): "))
         fat_goal = int(input("Enter your daily fat goal(grams): "))
@@ -135,16 +173,22 @@ while True:
         goals_file.write(str(carb_goal) + "\n")
         goals_file.write(str(fat_goal) + "\n")
         goals_file.write(str(protein_goal))
+    # Calculates net calories
     elif menu_choice == "2":
         calc_net_cal()
+    # Compares macro values with target
     elif menu_choice == "3":
         macro_entry_comparison()
+    # Displays user's weekly progress along with graphed data
     elif menu_choice == "4":
         print("\n*-----Weekly Progress-----*")
         print("Calories, Carbs, Fat, Protein (respectively)")
         for day in range(7):
             print(week[day] + ": " + str(weekly_cal[day]), str(weekly_carb[day]), str(weekly_fat[day]),
                   str(weekly_protein[day]))
+        # Graph progress for visualization
+        graph()
+    # Saves & quits application
     elif menu_choice == "5":
         print("Saving & quitting application...")
         # Save & close files
@@ -170,6 +214,7 @@ while True:
         protein_file.close()
         goals_file.close()
         exit(0)
+    # Invalid input
     else:
         print("Invalid input...please try again")
 
