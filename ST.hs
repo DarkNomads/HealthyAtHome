@@ -32,7 +32,9 @@ sleepData n = do
 monthlyData = sleepData 30
 weeklyData = sleepData 7
 
-
+-- Addition to a list
+addToList1 :: Int -> [Int] -> [Int]
+addToList1 x xs = (x: xs) 
 
 getReport :: Int -> Int -> String
 getReport hours exHours = do
@@ -70,11 +72,47 @@ toSleep x = do
     else "You need to sleep early"
 
 
-
-main = do
+menu = do
   print "Function meun: "
   print " sleepData (int) -- Generate ramdom data to compare (unit: days)"
   print " sleepCheck (int1) (int2) -- Enter age(int1), hours(int2) slept yesterday"
   print " sleepTip(num) -- Print out sleep tips"
+  print " averageSleep  -- Enter a list of sleep data to calculate the average"
+
+averageSleep :: IO ()
+averageSleep = do
+    putStrLn "Enter how many data: " 
+    numStr <- getLine
+    let num = (read numStr :: Int)
+    ave <- tempSleep num  -- use new version to return sum
+    print ("Your average sleep hours is : " ++ (show ave))           -- print them here
+
+tempSleep :: Int -> IO Int
+tempSleep num = do
+    putStrLn "Enter a data:"
+    nStr <- getLine
+    let n = (read nStr :: Int)
+    if num == 1 then
+        return n      -- pass the number back
+    else do
+        therest <- tempSleep (num - 1) -- get the rest of them
+        return ((n `div` num) + therest)             -- add them up
+
+main = do
+  print "Enter your age: "
+  ageStr <- getLine
+  print "Enter the sleep hours: "
+  hoursStr <- getLine
+  print "Enter the time (1-24) went sleep: "
+  bedTimeStr <- getLine
+  let ageInt = (read ageStr :: Int)
+  let hoursInt = (read hoursStr :: Int)
+  let bedTimeInt = (read bedTimeStr :: Int)
+  print (sleepCheck ageInt hoursInt)
+  print (toSleep bedTimeInt)
+
+
+
+
 
 
