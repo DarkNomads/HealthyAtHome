@@ -1,0 +1,41 @@
+%foodGroup(GroupName, FoodList).
+foodGroup(vegetable, [cauliflower, spinach, potato, zucchini, onion, lettuce]).
+foodGroup(meat, [chicken, beef, lamb, fish, egg]).
+foodGroup(cheese, [feta, mozeralla, parmesan, gouda, edam, emmental, kasar, ezine]).
+foodGroup(fruit, [lemon, banana, tomato, eggplant, pineapple, strawberry, blueberry, raspbery, grape, cucumber, orange, lemon, cranberry]).
+foodGroup(grain,[wheat, flour, rice, oat, barley, bread, pasta, corn, bakingPowder]).
+foodGroup(nut, [peanut, hazelnut, walnut, pistachio, pecan, cashew]).
+foodGroup(oil, [oliveOil, butter]).
+foodGroup(confection, [sugar, brownSugar, candy, chocolate, cocoa, honey]).
+foodGroup(spice, [salt, pepper, curry, ginger, cinnamon, thyme]).
+foodGroup(dairy, [milk, yogurt, cream, butter, iceCream, feta, mozeralla, parmesan, gouda, edam, emmental, kasar, ezine]).
+foodGroup(drinks, [water, tea]).
+
+%restriction(EatingType, CannotEatFoodGroupList, CalorieLimit). If CalorieLimit is different than 0, then the group cannot eat meals with
+%Calorie > CalorieLimit,
+%else if CalorieLimit is 0, there is no limit to Calorie intake. CannotEatFoodGroupList consists of the list of foodGroups that the EatingType cannot eat.
+cannotEatGroup(normal,[], 0).
+cannotEatGroup(vegetarian,[meat], 0).
+cannotEatGroup(vegan,[meat, dairy], 0).
+cannotEatGroup(diabetic, [confection], 0).
+cannotEatGroup(diet, [], 220).
+
+%meal(MealName, IngredientList, Calorie (in kcal), PrepTime (in minutes)).
+meal(bananaOatmeal, [oat, milk, cinnamon, banana, walnut], 150, 10).
+meal(cheeseCrepe, [flour, egg, milk, oliveOil, emmental, feta, kasar, salt], 134, 18).
+meal(eggSandwich, [egg, flour, salt, thyme, pepper, lettuce, corn, tomato], 170, 16).
+meal(saladWithNuts, [peanut, walnut, pecan, cashew, tomato, cucumber, corn, lettuce], 120, 15).
+meal(tomatoSoup, [tomato, flour, milk, butter, kasar, salt], 150, 15).
+meal(friedZucchini, [zucchini, tomato, oliveOil, salt], 295, 20).
+meal(chickenWrap, [chicken, lettuce, corn, tomato, cucumber, yogurt, flour, salt], 180, 20).
+meal(fishSticks, [fish, oliveOil, flour, egg], 250, 12).
+meal(salmon, [fish, lemon, salt, pepper], 100, 40).
+meal(bananaCake, [flour, banana, salt, butter, sugar, egg], 192, 6).
+meal(hazelnutBrownie, [hazelnut, butter, sugar, egg, flour, salt, bakingPowder, honey], 350, 12).
+meal(chocolateBrownie, [chocolate, cocoa, butter, sugar, egg, flour, salt, bakingPowder, honey], 450, 12).
+meal(tea, [tea], 0, 5).
+
+
+%user(userName, AllergyList (foodGroup), restriction (vegetarian, vegan, diabetic, diet, normal), Dislikes (food list), Likes (food list), TimeInHand).
+
+user(sarah, [], [normal], [], [chocolate, banana], 40). %check likes
