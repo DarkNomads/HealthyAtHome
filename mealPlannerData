@@ -36,6 +36,6 @@ meal(chocolateBrownie, [chocolate, cocoa, butter, sugar, egg, flour, salt, bakin
 meal(tea, [tea], 0, 5).
 
 
-%user(userName, AllergyList (foodGroup), restriction (vegetarian, vegan, diabetic, diet, normal), Dislikes (food list), Likes (food list), TimeInHand).
+%user(userName, AllergyList (foodGroup), restriction (vegetarian, vegan, diabetic, diet, normal), Dislikes (food list), Likes (food list), TimeAvailable).
 
 user(sarah, [], [normal], [], [chocolate, banana], 40). %check likes
