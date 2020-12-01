@@ -102,6 +102,7 @@ int workoutMenu(const int SIZE, const std::string* workoutArray) {
 /*** Workout Options Menu Function ***/
 /* Selects whether a user wants to view/edit/delete and calls the appropriate action. */
 void workoutOptionsMenu(Workout* workout) {
+    clearScreen();
     int padding = ((46 - (workout->getName()).length())/2);
     std::cout << "\n\n";
     std::cout << "|=============================================|" << std::endl;
@@ -401,6 +402,7 @@ void viewWorkout(Workout* workout) {
 /*** Edit Workout Function ***/
 /*  Asks the user which attribute they would like to edit and updates the information. */
 void editWorkout(Workout* workout) {
+    clearScreen();
     int padding = ((46 - (workout->getName()).length())/2);
     std::cout << "\n\n";
     std::cout << "|=============================================|" << std::endl;
